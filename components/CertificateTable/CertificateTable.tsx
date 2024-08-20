@@ -68,6 +68,7 @@ const certificates: Certificate[] = [
     adminName: "{{admin_name}}",
     uid: "123456778",
   },
+ 
 ];
 
 const CertificateTable = () => {
@@ -79,6 +80,7 @@ const CertificateTable = () => {
 
   return (
     <section className="mt-8">
+      
       <Table
         aria-label="Certificates"
         className="bg-white text-sm text-zinc-800 w-full"

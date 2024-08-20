@@ -1,4 +1,5 @@
 import React from 'react';
+import { CustomTextField } from '../TextField/CustomTextField';
 
 const pages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -37,7 +38,7 @@ const Pagination: React.FC = () => {
         <input
           type="text"
           id="gotoPage"
-          className="w-9 h-9 px-3 bg-white border border-zinc-300 rounded"
+          className="w-9 h-9 px-3 bg-white border border-zinc-300 rounded text-center"
           min="1"
           max="15"
           defaultValue="1"

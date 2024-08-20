@@ -20,7 +20,7 @@ const inputStyles = tv({
 });
 
 interface CustomTextFieldProps {
-  label: string;
+  label?: string;
   id?: string;
   isRequired?: boolean;
   className?: string;

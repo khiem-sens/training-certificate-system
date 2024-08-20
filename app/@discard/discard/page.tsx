@@ -1,8 +1,14 @@
+"use client";
 import { CustomButton } from "@/components/Button/CustomButton";
 import Modal from "@/components/Modal/Modal";
+import { useRouter } from "next/navigation";
 import * as React from "react";
 
 function CancelPage() {
+  const router = useRouter();
+  const handleBackClick = () => {
+    router.back();
+  };
   return (
     <Modal>
       <section
@@ -19,13 +25,21 @@ function CancelPage() {
           <header className="text-zinc-800">
             <h1 className="text-base font-bold leading-6">Discard changes?</h1>
           </header>
-          <p className="mt-3 font-normal text-opacity-70">
+          <p className="mt-3 text-sm text-opacity-70">
             Your changes have not been saved yet. <br />
             Do you want to discard all changes?
           </p>
-          <footer className="flex gap-4 items-center justify-end pt-4 mt-6 border-t border-zinc-300">
-            <CustomButton variant="secondary">No, take me back</CustomButton>
-            <CustomButton variant="primary">Discard changes</CustomButton>
+          <footer className="flex gap-4 items-center justify-end pt-4 mt-4 border-t border-zinc-300">
+            <CustomButton
+              onClick={handleBackClick}
+              variant="secondary"
+              className="text-sm"
+            >
+              No, take me back
+            </CustomButton>
+            <CustomButton variant="primary" className="text-sm">
+              Discard changes
+            </CustomButton>
           </footer>
         </article>
         <div className="absolute top-0 right-0 flex items-center justify-center w-10 h-10 p-1">
@@ -36,6 +50,7 @@ function CancelPage() {
             aria-label="Close"
           >
             <img
+              onClick={handleBackClick}
               loading="lazy"
               src="/icons/close.svg"
               alt="Close icon"
