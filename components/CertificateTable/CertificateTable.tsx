@@ -1,24 +1,24 @@
 "use client";
-import React from "react";
 import { useRouter } from "next/navigation";
+import React from "react";
 import {
   Table,
   TableHeader,
   TableBody,
-  Column,
   Row,
   Cell,
+  Column,
 } from "react-aria-components";
 
-interface Certificate {
+interface CertificateData {
   name: string;
   courseTitle: string;
   orgName: string;
   adminName: string;
-  uid: string | "Processing...";
+  uid: string;
 }
 
-const certificates: Certificate[] = [
+const certificateData: CertificateData[] = [
   {
     name: "{{name}}",
     courseTitle: "{{course-title}}",
@@ -71,75 +71,58 @@ const certificates: Certificate[] = [
  
 ];
 
-const CertificateTable = () => {
+const CertificateTable: React.FC = () => {
   const router = useRouter();
 
   const handleViewClick = () => {
     router.push("/certification");
   };
-
   return (
-    <section className="mt-8">
-      
-      <Table
-        aria-label="Certificates"
-        className="bg-white text-sm text-zinc-800 w-full"
-      >
-        {/* <TableHeader className="flex items-center bg-[#F2F4F8] border-t border-b border-[#DDDDDD] px-20 py-3 whitespace-nowrap">
-          <Column isRowHeader className="w-[191px] text-start">Granted name</Column>
-          <Column className="w-[191px] text-start">Course title</Column>
-          <Column className="w-[191px] text-start">Organization</Column>
-          <Column className="w-[191px] text-start">Created by</Column>
-          <Column className="w-40 text-start">UID</Column>
-          <Column className="w-[162px] text-start">PDF</Column>
-        </TableHeader> */}
-        <TableHeader className="flex items-center bg-[#F2F4F8] border-t border-b border-[#DDDDDD] px-20 py-3 whitespace-nowrap">
-          <Column isRowHeader className="w-[242px] text-start">
-            Granted name
-          </Column>
-          <Column className="w-[242px] text-start">Course title</Column>
-          <Column className="w-[242px] text-start">Organization</Column>
-          <Column className="w-[240px] text-start">Created by</Column>
-          <Column className="w-60 text-start">UID</Column>
-          <Column className="w-[162px] text-start">PDF</Column>
-        </TableHeader>
-
-        <TableBody>
-          {certificates.map((certificate, index) => {
-            const isProcessing = certificate.uid === "Processing...";
-            return (
-              <Row
-                key={index}
-                className="flex items-center border-b border-[#DDDDDD] px-20"
-              >
-                <Cell className="flex-1 w-[191px] py-5">
-                  {certificate.name}
-                </Cell>
-                <Cell className="flex-1 w-[191px] py-5">
-                  {certificate.courseTitle}
-                </Cell>
-                <Cell className="flex-1 w-[191px] py-5">
-                  {certificate.orgName}
-                </Cell>
-                <Cell className="flex-1 w-[191px] py-5">
-                  {certificate.adminName}
-                </Cell>
+        <Table
+          aria-label="Certificate Table"
+          className="mt-8 text-sm text-zinc-800 w-full"
+          style={{ tableLayout: 'fixed' }}
+        >
+          <TableHeader className="bg-[#F2F4F8] border-t border-b border-[#DDDDDD] whitespace-nowrap">
+            <Column isRowHeader className="py-3 text-start font-bold text-sm pl-20">
+              Granted Name
+            </Column>
+            <Column className="py-3 text-start font-bold text-sm">
+              Course Title
+            </Column>
+            <Column className="py-3 text-start font-bold text-sm">
+              Organization
+            </Column>
+            <Column className="py-3 text-start font-bold text-sm">
+              Created By
+            </Column>
+            <Column className="py-3 text-start font-bold text-sm">
+              UID
+            </Column>
+            <Column className="py-3 text-start font-bold text-sm pr-20">
+              PDF
+            </Column>
+          </TableHeader>
+          <TableBody>
+            {certificateData.map((certificate, index) => {
+               const isProcessing = certificate.uid === "Processing...";
+               return (
+              <Row key={index} className="border-b gap-6 border-zinc-300">
+                <Cell className="py-5 text-sm pl-20">{certificate.name}</Cell>
+                <Cell className="py-5 text-sm">{certificate.courseTitle}</Cell>
+                <Cell className="py-5 text-sm">{certificate.orgName}</Cell>
+                <Cell className="py-5 text-sm">{certificate.adminName}</Cell>
                 <Cell
-                  className={`flex-1 w-40 py-5 ${
-                    isProcessing ? "text-orange-700" : ""
+                  className={`py-5 text-sm ${
+                    isProcessing  ? "text-[#D92A00]" : ""
                   }`}
                 >
                   {certificate.uid}
                 </Cell>
-                <Cell
-                  className={`w-[162px] py-5 flex gap-4 text-blue-800 ${
+                <Cell className={`py-5 text-sm flex gap-4 pr-20 ${
                     isProcessing ? "opacity-50 pointer-events-none" : ""
-                  }`}
-                >
-                  <button
-                    onClick={handleViewClick}
-                    className="flex items-center gap-1"
-                  >
+                  }`}>
+                  <button onClick={handleViewClick} className="text-blue-800 w-17 flex gap-1 items-center">
                     <img
                       loading="lazy"
                       src="/icons/eye.svg"
@@ -148,7 +131,7 @@ const CertificateTable = () => {
                     />
                     <span>View</span>
                   </button>
-                  <button className="flex items-center gap-1">
+                  <button className="text-blue-800 flex gap-1 items-center">
                     <img
                       loading="lazy"
                       src="/icons/download.svg"
@@ -159,11 +142,9 @@ const CertificateTable = () => {
                   </button>
                 </Cell>
               </Row>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </section>
+            )})}
+          </TableBody>
+        </Table>
   );
 };
 
