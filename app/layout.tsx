@@ -14,11 +14,13 @@ export default function RootLayout({
   form,
   discard,
   certification,
+  signout,
 }: Readonly<{
   children: React.ReactNode;
   form: React.ReactNode;
   discard: React.ReactNode;
   certification: React.ReactNode;
+  signout: React.ReactNode;
 }>) {
   return (
     <html lang="en">
@@ -27,6 +29,7 @@ export default function RootLayout({
         {form}
         {discard}
         {certification}
+        {signout}
       </body>
     </html>
   );

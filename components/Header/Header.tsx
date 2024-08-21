@@ -15,11 +15,10 @@ const Header = () => {
       <div className="flex items-center gap-2 min-w-[240px]">
         <div className="w-80">
           <form className="flex items-center gap-2 w-full px-3 bg-white border border-zinc-300 rounded">
-            
             <input
               type="search"
               id="search"
-              className="flex-1 py-2 text-sm text-zinc-800 bg-transparent border-none"
+              className="flex-1 py-2 text-sm text-zinc-800 bg-transparent border-none outline-none"
               placeholder="Search"
             />
             <button type="submit" className="w-7 h-full">
