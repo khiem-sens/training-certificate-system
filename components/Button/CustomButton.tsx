@@ -20,7 +20,7 @@ interface CustomButtonProps {
   className?: string;
   children: React.ReactNode;
   onClick?: () => void;
-  route?: string; // New prop for route
+  route?: string; 
 }
 
 export const CustomButton: React.FC<CustomButtonProps> = ({
@@ -28,20 +28,20 @@ export const CustomButton: React.FC<CustomButtonProps> = ({
   className,
   children,
   onClick,
-  route, // Destructure the route prop
+  route, 
   ...props
 }) => {
-  const router = useRouter(); // Initialize the router
+  const router = useRouter(); 
 
   const handleClick = () => {
-    if (onClick) onClick(); // Execute the onClick callback if provided
-    if (route) router.push(route); // Navigate to the route if provided
+    if (onClick) onClick(); 
+    if (route) router.push(route); 
   };
 
   return (
     <Button
       className={twMerge(buttonStyles({ variant }), className)}
-      onPress={handleClick} // Use the new handleClick function
+      onPress={handleClick} 
       {...props}
     >
       {children}
