@@ -22,6 +22,7 @@ const inputStyles = tv({
 interface CustomTextFieldProps {
   label?: string;
   id?: string;
+  type?: string;
   isRequired?: boolean;
   className?: string;
 }
@@ -29,12 +30,13 @@ interface CustomTextFieldProps {
 export const CustomTextField: React.FC<CustomTextFieldProps> = ({
   label,
   id,
+  type,
   isRequired = false,
   className,
   ...props
 }) => (
   <TextField
-    className={twMerge(textFieldStyles({ isRequired }), className)}
+    className={twMerge(textFieldStyles({ isRequired }), type, className)}
     {...props}
   >
     <Label className={labelStyles()}>

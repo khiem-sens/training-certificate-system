@@ -9,21 +9,34 @@ interface PopupNotificationProps {
   message: string;
   onConfirm: string;
   onCancel: string;
+  route?: string; 
 }
 
-function PopupNotification({ title, message, onConfirm, onCancel }: PopupNotificationProps) {
+function PopupNotification({ title, message, onConfirm, onCancel, route }: PopupNotificationProps) {
+  const [isVisible, setIsVisible] = React.useState(true);
   const router = useRouter();
+
   const handleBackClick = () => {
     router.back();
+  };
+
+  const handleConfirmClick = () => {
+    setIsVisible(false);
+    if (route) {
+      router.push(route); 
+    }
   };
 
   // Insert <br/> after every period (.) or question mark (?)
   const formattedMessage = message.replace(/([.?!])\s*(?=[A-Z])/g, "$1<br/>");
 
+  if (!isVisible) {
+    return null;
+  }
+
   return (
     <Modal>
       <section
-        
         className="w-[700px] h-auto fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 flex items-start p-6 bg-white rounded border border-[#DDDDDD] shadow-lg"
       >
         <img
@@ -48,7 +61,11 @@ function PopupNotification({ title, message, onConfirm, onCancel }: PopupNotific
             >
               {onCancel}
             </CustomButton>
-            <CustomButton variant="primary" className="text-sm">
+            <CustomButton
+              onClick={handleConfirmClick} 
+              variant="primary"
+              className="text-sm"
+            >
               {onConfirm}
             </CustomButton>
           </footer>

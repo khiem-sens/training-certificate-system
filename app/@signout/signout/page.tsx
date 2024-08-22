@@ -2,7 +2,7 @@
 import PopupNotification from "@/components/PopupNotification/PopupNotification";
 import * as React from "react";
 
-function CancelPage() {
+function SignoutPage() {
   return (
     <>
       <PopupNotification
@@ -10,9 +10,10 @@ function CancelPage() {
         message="Are you sure you want to sign out?"
         onCancel="Cancel"
         onConfirm="Sign out now"
+        route="/signin"
       />
     </>
   );
 }
 
-export default CancelPage;
+export default SignoutPage;

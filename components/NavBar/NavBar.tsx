@@ -1,16 +1,21 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import AdminDropdown from "../Dropdown/Dropdown";
+import NavItem from "../NavItem/NavItem";
 
 const NavBar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null); // Create a ref for the dropdown
+  const [activeSection, setActiveSection] = useState<string | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleDropdownToggle = () => {
     setIsDropdownOpen((prev) => !prev);
   };
 
-  // Close the dropdown when clicking outside
+  const handleSectionClick = (section: string) => {
+    setActiveSection(section);
+  };
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -18,10 +23,7 @@ const NavBar = () => {
       }
     };
 
-    // Add event listener to the document
     document.addEventListener("mousedown", handleClickOutside);
-
-    // Clean up the event listener on component unmount
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -36,24 +38,20 @@ const NavBar = () => {
         className="w-[74px] aspect-[2.65] object-contain"
       />
       <nav className="flex flex-wrap items-center gap-1 flex-1 ml-10 text-blue-800">
-        <div className="flex items-center gap-2 p-2 md:p-4 border-b-4 border-blue-800 bg-gray-100 w-32 md:w-40">
-          <img
-            loading="lazy"
-            src="/icons/certificate.svg"
-            alt="Certificates Icon"
-            className="w-5"
-          />
-          <span className="font-bold">Certificates</span>
-        </div>
-        <div className="flex items-center gap-2 p-2 md:p-4 w-44">
-          <img
-            loading="lazy"
-            src="/icons/organizations.svg"
-            alt="Organizations Icon"
-            className="w-5"
-          />
-          <span>Organizations & Courses</span>
-        </div>
+        <NavItem
+          label="Certificates"
+          iconSrc="/icons/certificate.svg"
+          section="certificates"
+          isActive={activeSection === 'certificates'}
+          onClick={handleSectionClick}
+        />
+        <NavItem
+          label="Organizations & Courses"
+          iconSrc="/icons/organizations.svg"
+          section="organizations"
+          isActive={activeSection === 'organizations'}
+          onClick={handleSectionClick}
+        />
       </nav>
       <div className="flex items-center gap-2 relative" ref={dropdownRef}>
         <img
