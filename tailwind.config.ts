@@ -16,7 +16,7 @@ const config: Config = {
     },
     fontFamily: {
       "LibreBaskerville": ["Libre Baskerville"],
-      "NotoSans": ["Noto Sans"],
+      notoSans: ['Noto Sans JP', 'sans-serif'],
     },
   },
   plugins: [],

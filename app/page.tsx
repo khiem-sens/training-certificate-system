@@ -1,7 +1,6 @@
 import CertificateTable from "@/components/CertificateTable/CertificateTable";
 import Header from "@/components/Header/Header";
 import NavBar from "@/components/NavBar/NavBar";
-import Pagination from "@/components/Pagination/Pagination";
 
 export default function Home() {
   return (
@@ -9,7 +8,6 @@ export default function Home() {
       <NavBar/>
       <Header/>
       <CertificateTable/>
-      <Pagination/>
     </main>
   );
 }

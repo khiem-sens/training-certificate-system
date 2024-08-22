@@ -60,10 +60,10 @@ const NavBar = () => {
           alt="Avatar"
           className="w-6 aspect-square object-contain"
         />
-        <div className="relative flex items-center gap-2">
+        <div className="relative flex items-center">
           <div
             onClick={handleDropdownToggle}
-            className="text-blue-800 w-24 h-6 cursor-pointer"
+            className="flex items-center text-[#1E52A6] w-24 h-6 cursor-pointer text-sm"
           >
             Admin_name
           </div>

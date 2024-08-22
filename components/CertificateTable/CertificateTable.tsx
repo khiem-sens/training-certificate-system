@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
+import { certificateData } from "@/data/certificateData";
 import {
   Table,
   TableHeader,
@@ -9,135 +10,35 @@ import {
   Cell,
   Column,
 } from "react-aria-components";
+import Pagination from "../Pagination/Pagination";
 
-interface CertificateData {
-  name: string;
-  courseTitle: string;
-  orgName: string;
-  adminName: string;
-  uid: string;
-}
-
-const certificateData: CertificateData[] = [
-  {
-    name: "{{name}}",
-    courseTitle: "{{course-title}}",
-    orgName: "{{org_name}}",
-    adminName: "{{admin_name}}",
-    uid: "Processing...",
-  },
-  {
-    name: "{{name}}",
-    courseTitle: "{{course-title}}",
-    orgName: "{{org_name}}",
-    adminName: "{{admin_name}}",
-    uid: "Processing...",
-  },
-  {
-    name: "{{name}}",
-    courseTitle: "{{course-title}}",
-    orgName: "{{org_name}}",
-    adminName: "{{admin_name}}",
-    uid: "Processing...",
-  },
-  {
-    name: "{{name}}",
-    courseTitle: "{{course-title}}",
-    orgName: "{{org_name}}",
-    adminName: "{{admin_name}}",
-    uid: "123456778",
-  },
-  {
-    name: "{{name}}",
-    courseTitle: "{{course-title}}",
-    orgName: "{{org_name}}",
-    adminName: "{{admin_name}}",
-    uid: "123456778",
-  },
-  {
-    name: "{{name}}",
-    courseTitle: "{{course-title}}",
-    orgName: "{{org_name}}",
-    adminName: "{{admin_name}}",
-    uid: "123456778",
-  },
-  {
-    name: "{{name}}",
-    courseTitle: "{{course-title}}",
-    orgName: "{{org_name}}",
-    adminName: "{{admin_name}}",
-    uid: "123456778",
-  },
-  {
-    name: "{{name}}",
-    courseTitle: "{{course-title}}",
-    orgName: "{{org_name}}",
-    adminName: "{{admin_name}}",
-    uid: "123456778",
-  },
-  {
-    name: "{{name}}",
-    courseTitle: "{{course-title}}",
-    orgName: "{{org_name}}",
-    adminName: "{{admin_name}}",
-    uid: "123456778",
-  },
-  {
-    name: "{{name}}",
-    courseTitle: "{{course-title}}",
-    orgName: "{{org_name}}",
-    adminName: "{{admin_name}}",
-    uid: "123456778",
-  },
-  {
-    name: "{{name}}",
-    courseTitle: "{{course-title}}",
-    orgName: "{{org_name}}",
-    adminName: "{{admin_name}}",
-    uid: "123456778",
-  },
-  {
-    name: "{{name}}",
-    courseTitle: "{{course-title}}",
-    orgName: "{{org_name}}",
-    adminName: "{{admin_name}}",
-    uid: "123456778",
-  },
-  {
-    name: "{{name}}",
-    courseTitle: "{{course-title}}",
-    orgName: "{{org_name}}",
-    adminName: "{{admin_name}}",
-    uid: "123456778",
-  },
-  {
-    name: "{{name}}",
-    courseTitle: "{{course-title}}",
-    orgName: "{{org_name}}",
-    adminName: "{{admin_name}}",
-    uid: "123456778",
-  },
-  {
-    name: "{{name}}",
-    courseTitle: "{{course-title}}",
-    orgName: "{{org_name}}",
-    adminName: "{{admin_name}}",
-    uid: "123456778",
-  },
-  {
-    name: "{{name}}",
-    courseTitle: "{{course-title}}",
-    orgName: "{{org_name}}",
-    adminName: "{{admin_name}}",
-    uid: "123456778",
-  },
-];
 
 const CertificateTable: React.FC = () => {
   const router = useRouter();
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  const totalPages = Math.ceil(certificateData.length / itemsPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = certificateData.slice(indexOfFirstItem, indexOfLastItem);
 
   const handleViewClick = () => {
     router.push("/certification");
+  };
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const handleGotoPage = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const input = form.elements.namedItem('gotoPage') as HTMLInputElement;
+    const page = parseInt(input.value, 10);
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
   };
 
   return (
@@ -165,10 +66,10 @@ const CertificateTable: React.FC = () => {
             <Column className="py-3 text-start font-bold text-sm pr-20">PDF</Column>
           </TableHeader>
           <TableBody>
-            {certificateData.map((certificate, index) => {
+            {currentItems.map((certificate, index) => {
               const isProcessing = certificate.uid === "Processing...";
               return (
-                <Row key={index} className="border-b gap-6 border-zinc-300">
+                <Row key={index} className="border-b gap-6 border-zinc-300 px-20">
                   <Cell className="py-5 text-sm pl-20 bg-white">{certificate.name}</Cell>
                   <Cell className="py-5 text-sm bg-white">{certificate.courseTitle}</Cell>
                   <Cell className="py-5 text-sm bg-white">{certificate.orgName}</Cell>
@@ -213,6 +114,12 @@ const CertificateTable: React.FC = () => {
           </TableBody>
         </Table>
       </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+        onGotoPage={handleGotoPage}
+      />
     </div>
   );
 };
