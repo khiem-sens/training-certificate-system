@@ -10,7 +10,7 @@ const AdminDropdown: React.FC = () => {
   return (
     <nav
       onClick={handleSignout}
-      className="flex overflow-hidden flex-col justify-center  w-32 max-w-full  rounded border border-solid shadow-lg border-zinc-300 text-zinc-800 "
+      className="flex overflow-hidden flex-col justify-center w-32 max-w-full rounded border border-solid shadow-lg border-zinc-300 text-zinc-800 outline-none"
     >
       <ul className="flex flex-col w-full">
         <li className="flex-1 shrink gap-3 self-stretch px-3 py-2 w-full">

@@ -5,7 +5,7 @@ import NavItem from "../NavItem/NavItem";
 
 const NavBar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [activeSection, setActiveSection] = useState<string>('certificates'); // Default to 'certificates'
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleDropdownToggle = () => {
