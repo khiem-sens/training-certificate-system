@@ -30,7 +30,7 @@ const NavBar = () => {
   }, [dropdownRef]);
 
   return (
-    <header className="flex justify-between items-center px-5 w-full bg-white border-b border-zinc-300 z-10 whitespace-nowrap md:px-20">
+    <header className="flex justify-between items-center px-5 w-full bg-white border-b border-zinc-300 z-10 whitespace-nowrap md:px-20 font-NotoSans">
       <img
         loading="lazy"
         src="/images/logo.svg"

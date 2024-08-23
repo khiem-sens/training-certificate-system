@@ -13,11 +13,11 @@ const textFieldStyles = tv({
 });
 
 const labelStyles = tv({
-  base: "font-bold text-zinc-800 flex items-center gap-1",
+  base: "font-bold text-sm text-zinc-800 flex items-center gap-1",
 });
 
 const inputStyles = tv({
-  base: "mt-1 p-2 border border-zinc-300 rounded bg-white text-zinc-800",
+  base: "mt-1 p-2 text-sm border border-zinc-300 rounded bg-white text-zinc-800",
 });
 
 interface CustomTextFieldProps {

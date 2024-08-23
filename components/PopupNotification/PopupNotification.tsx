@@ -37,7 +37,7 @@ function PopupNotification({ title, message, onConfirm, onCancel, route }: Popup
   return (
     <Modal>
       <section
-        className="w-[700px] h-auto fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 flex items-start p-6 bg-white rounded border border-[#DDDDDD] shadow-lg"
+        className="font-NotoSans w-[700px] h-auto fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 flex items-start p-6 bg-white rounded border border-[#DDDDDD] shadow-lg"
       >
         <img
           loading="lazy"

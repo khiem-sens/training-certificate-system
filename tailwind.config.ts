@@ -13,10 +13,10 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
-    },
-    fontFamily: {
-      "LibreBaskerville": ["Libre Baskerville"],
-      notoSans: ['Noto Sans JP', 'sans-serif'],
+      fontFamily: {
+        "LibreBaskerville": ["Libre Baskerville"],
+        'NotoSans': ['Noto Sans JP'],
+      },
     },
   },
   plugins: [],

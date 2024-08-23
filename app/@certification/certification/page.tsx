@@ -7,7 +7,7 @@ import React from "react";
 const Certification = () => {
   return (
     <Modal>
-      <section className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 flex overflow-hidden mt-5 bg-white w-[1121px] max-w-full">
+      <section className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 flex overflow-hidden mt-5 bg-white w-[1121px] max-w-full font-NotoSans">
         <img
           loading="lazy"
           src="/images/certificate-frame.svg"
@@ -27,7 +27,7 @@ const Certification = () => {
           />
         </div>
         <div className="absolute bottom-[80px] left-2/4 text-sm leading-5 opacity-50 -translate-x-1/2 w-[101px]">
-          UID: 12345678
+          UID: 123456778
         </div>
       </section>
     </Modal>

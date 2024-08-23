@@ -12,7 +12,7 @@ const NavItem: React.FC<NavItemProps> = ({ label, iconSrc, section, isActive, on
   return (
     <div
       onClick={() => onClick(section)}
-      className={`relative flex items-center p-2 md:p-4 cursor-pointer w-fit overflow-hidden transition-all duration-300 ease-in-out ${
+      className={`relative flex items-center p-2 md:p-4 cursor-pointer w-fit overflow-hidden transition-all duration-300 ease-in-out font-NotoSans ${
         isActive ? 'bg-gray-100' : 'bg-transparent'
       }`}
     >

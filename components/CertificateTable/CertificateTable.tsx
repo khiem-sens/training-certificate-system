@@ -70,7 +70,7 @@ const CertificateTable: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full h-[calc(100vh-250px)] text-sm text-zinc-800">
+    <div className="relative w-full h-[calc(100vh-250px)] text-sm text-zinc-800 font-NotoSans">
       <div className="overflow-y-auto h-full">
         <Table
           aria-label="Certificate Table"

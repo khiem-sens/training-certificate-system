@@ -6,7 +6,7 @@ interface CertificateHeaderProps {
 }
 
 const CertificateHeader: React.FC<CertificateHeaderProps> = ({ title, subtitle }) => (
-  <div className="flex flex-col w-full">
+  <div className="flex flex-col w-full font-NotoSans">
     <h1 className="gap-2 self-center text-3xl font-bold leading-10">
       {title}
     </h1>

@@ -12,7 +12,7 @@ import { tv } from "tailwind-variants";
 import { twMerge } from "tailwind-merge";
 
 const comboBoxStyles = tv({
-  base: "flex flex-col",
+  base: "flex flex-col text-sm",
   variants: {
     isRequired: {
       true: "required",
@@ -42,7 +42,7 @@ const ComboBox: React.FC<ComboBoxProps> = ({
 
   return (
     <AriaComboBox className={twMerge(comboBoxStyles({ isRequired }))}>
-      <Label className="font-bold text-zinc-800 flex items-center gap-1">
+      <Label className="font-bold mb-1 text-zinc-800 flex items-center gap-1">
         {label}
         {isRequired && <span className="text-orange-700 opacity-70">*</span>}
       </Label>
@@ -52,9 +52,9 @@ const ComboBox: React.FC<ComboBoxProps> = ({
           className="w-full border border-[#DDDDDD] rounded bg-white text-zinc-800 p-2 pr-8"
           placeholder="Choose"
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)} // Handle input changes
+          onChange={(e) => setInputValue(e.target.value)} 
         />
-        <Button className="absolute inset-y-0 right-0 flex items-center px-2 border-l gap-2 w-7 justify-center">
+        <Button className="absolute inset-y-0 right-0 flex items-center px-2 border-l gap-2 w-7 justify-center ">
           <img src="/icons/caret-down.svg" alt="" aria-hidden="true" />
         </Button>
       </div>
