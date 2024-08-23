@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ComboBox as AriaComboBox,
   Input,
@@ -33,6 +33,13 @@ const ComboBox: React.FC<ComboBoxProps> = ({
   id,
   isRequired = false,
 }) => {
+  const [inputValue, setInputValue] = useState<string>("");
+
+  const handleSelectionChange = (value: string) => {
+    setInputValue(value); 
+    // console.log(value);
+  };
+
   return (
     <AriaComboBox className={twMerge(comboBoxStyles({ isRequired }))}>
       <Label className="font-bold text-zinc-800 flex items-center gap-1">
@@ -44,6 +51,8 @@ const ComboBox: React.FC<ComboBoxProps> = ({
           id={id}
           className="w-full border border-[#DDDDDD] rounded bg-white text-zinc-800 p-2 pr-8"
           placeholder="Choose"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)} // Handle input changes
         />
         <Button className="absolute inset-y-0 right-0 flex items-center px-2 border-l gap-2 w-7 justify-center">
           <img src="/icons/caret-down.svg" alt="" aria-hidden="true" />
@@ -61,6 +70,7 @@ const ComboBox: React.FC<ComboBoxProps> = ({
                   isSelected && "bg-zinc-200 font-medium"
                 )
               }
+              onAction={() => handleSelectionChange(item)}
             >
               {item}
             </ListBoxItem>

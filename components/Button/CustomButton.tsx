@@ -6,11 +6,11 @@ import { twMerge } from "tailwind-merge";
 import { useRouter } from "next/navigation";
 
 const buttonStyles = tv({
-  base: "px-4 py-2 rounded shadow-sm",
+  base: "px-4 py-2 rounded shadow-sm transition-all duration-200 ease-in-out", // Thêm transition để có hiệu ứng mượt mà
   variants: {
     variant: {
-      primary: "bg-blue-800 text-white",
-      secondary: "bg-white border border-zinc-300 text-zinc-800",
+      primary: "bg-blue-800 text-white hover:bg-blue-600",
+      secondary: "bg-white border border-zinc-300 text-zinc-800 hover:text-[#346fe0]",
     },
   },
 });

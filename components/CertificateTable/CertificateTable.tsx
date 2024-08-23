@@ -1,7 +1,6 @@
 "use client";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import { certificateData } from "@/data/certificateData";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { useState, useEffect, use } from "react";
 import {
   Table,
   TableHeader,
@@ -11,17 +10,44 @@ import {
   Column,
 } from "react-aria-components";
 import Pagination from "../Pagination/Pagination";
-
+import { certificateData, CertificateData } from '@/data/certificateData';
 
 const CertificateTable: React.FC = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const [certificates, setCertificates] = useState<CertificateData[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  const totalPages = Math.ceil(certificateData.length / itemsPerPage);
+  const totalPages = Math.ceil(certificates.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = certificateData.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = certificates.slice(indexOfFirstItem, indexOfLastItem);
+
+  useEffect(() => {
+    const page = searchParams.get('page');
+    if (page) {
+      setCurrentPage(parseInt(page, 10));
+    }
+  }, [searchParams]);
+
+  //Sync Table data with API Url
+
+  // useEffect(() => {
+  //   const fetchCertificates = async () => {
+  //     const response = await fetch(`/api/certificates?page=${currentPage}&limit=${itemsPerPage}`);
+  //     const data = await response.json();
+  //     setCertificates(data.certificates);
+  //   };
+
+  //   fetchCertificates();
+  // }, [currentPage]);
+
+
+  //certificateData form '@/data/certificateData'
+  useEffect(() => {
+    setCertificates(certificateData);
+  }, []);
 
   const handleViewClick = () => {
     router.push("/certification");
@@ -29,6 +55,7 @@ const CertificateTable: React.FC = () => {
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
+    router.push(`?page=${pageNumber}`);
   };
 
   const handleGotoPage = (event: React.FormEvent<HTMLFormElement>) => {
@@ -38,6 +65,7 @@ const CertificateTable: React.FC = () => {
     const page = parseInt(input.value, 10);
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
+      router.push(`?page=${page}`);
     }
   };
 

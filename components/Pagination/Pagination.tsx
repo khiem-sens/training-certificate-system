@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
@@ -6,6 +8,8 @@ interface PaginationProps {
 }
 
 const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange, onGotoPage }) => {
+  const [gotoPageInput, setGotoPageInput] = useState(currentPage.toString());
+
   const getPageNumbers = () => {
     const pageNumbers = [];
     const maxVisiblePages = 10;
@@ -19,16 +23,29 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
     for (let i = startPage; i <= endPage; i++) {
       pageNumbers.push(i);
     }
-
     return pageNumbers;
   };
 
   const pageNumbers = getPageNumbers();
 
+  const handleGotoPageInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setGotoPageInput(event.target.value);
+    // console.log(event.target.value);
+  };
+
+  const handleGotoPageSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const pageNumber = parseInt(gotoPageInput, 10);
+
+    if (!isNaN(pageNumber) && pageNumber >= 1 && pageNumber <= totalPages) {
+      onPageChange(pageNumber);
+    }
+  };
+
   return (
-    <nav className="flex flex-wrap items-center justify-end gap-10 px-5 w-full md:px-20 " aria-label="Pagination">
-      <div className="flex items-center gap-4  ">
-        <button 
+    <nav className="flex flex-wrap items-center justify-end gap-10 px-5 w-full md:px-20" aria-label="Pagination">
+      <div className="flex items-center gap-4">
+        <button
           className="w-6 p-0.5" 
           aria-label="Previous page"
           onClick={() => onPageChange(Math.max(1, currentPage - 1))}
@@ -40,7 +57,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
           {pageNumbers.map((page) => (
             <button
               key={page}
-              className={`px-1 py-0.5 w-6 ${page === currentPage ? 'text-blue-600 border-b border-blue-600' : ''}`}
+              className={`px-1 py-0.5 w-6 hover:text-[#346fe0] ${page === currentPage ? 'text-blue-600 border-b border-blue-600' : ''}`}
               aria-current={page === currentPage ? 'page' : undefined}
               onClick={() => onPageChange(page)}
             >
@@ -57,7 +74,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
           <img loading="lazy" src="/icons/caret-right.svg" alt="Next page" />
         </button>
       </div>
-      <form onSubmit={onGotoPage} className="flex items-center gap-2 text-sm text-zinc-800">
+      <form onSubmit={handleGotoPageSubmit} className="flex items-center gap-2 text-sm text-zinc-800">
         <label htmlFor="gotoPage">Go to page</label>
         <input
           id="gotoPage"
@@ -65,7 +82,8 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
           className="w-9 h-9 px-3 bg-white border border-zinc-300 rounded text-center"
           min="1"
           max={totalPages}
-          defaultValue={currentPage}
+          value={gotoPageInput}
+          onChange={handleGotoPageInputChange}
         />
         <span>/ {totalPages}</span>
       </form>

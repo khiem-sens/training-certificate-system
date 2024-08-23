@@ -63,7 +63,7 @@ const NavBar = () => {
         <div className="relative flex items-center">
           <div
             onClick={handleDropdownToggle}
-            className="flex items-center text-[#1E52A6] w-24 h-6 cursor-pointer text-sm"
+            className="flex items-center text-[#1E52A6] w-24 h-6 cursor-pointer text-sm hover:text-[#346fe0]"
           >
             Admin_name
           </div>
@@ -76,9 +76,7 @@ const NavBar = () => {
             loading="lazy"
             src="/icons/vector.svg"
             alt="Dropdown arrow"
-            className={`w-[11px] h-[6px] aspect-square object-contain cursor-pointer transition-transform duration-300 ${
-              isDropdownOpen ? "rotate-180" : "rotate-0"
-            }`}
+            className='w-[11px] h-[6px] aspect-square object-contain cursor-pointer rotate-180'
             onClick={handleDropdownToggle}
           />
         </div>

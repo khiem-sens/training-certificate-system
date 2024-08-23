@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { TextField, Label, Input } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { twMerge } from "tailwind-merge";
@@ -34,15 +35,33 @@ export const CustomTextField: React.FC<CustomTextFieldProps> = ({
   isRequired = false,
   className,
   ...props
-}) => (
-  <TextField
-    className={twMerge(textFieldStyles({ isRequired }), type, className)}
-    {...props}
-  >
-    <Label className={labelStyles()}>
-      {label}
-      {isRequired && <span className="text-orange-700 opacity-70">*</span>}
-    </Label>
-    <Input id={id} className={inputStyles()} placeholder="Type here" />
-  </TextField>
-);
+}) => {
+  const [inputValue, setInputValue] = useState<string>("");
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+    // console.log(event.target.value);
+  };
+
+  return (
+    <TextField
+      className={twMerge(textFieldStyles({ isRequired }), type, className)}
+      {...props}
+    >
+      <Label className={labelStyles()}>
+        {label}
+        {isRequired && <span className="text-orange-700 opacity-70">*</span>}
+      </Label>
+      <Input
+        id={id}
+        type={type}
+        className={inputStyles()}
+        placeholder="Type here"
+        value={inputValue}
+        onChange={handleInputChange}
+      />
+    </TextField>
+  );
+};
+
+export default CustomTextField;
