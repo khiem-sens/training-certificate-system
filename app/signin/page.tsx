@@ -11,7 +11,7 @@ export default function SigninPage() {
   };
 
   return (
-    <div className="flex flex-col items-center px-20 py-40 bg-white overflow-hidden max-md:px-5 max-md:py-24">
+    <div className="flex flex-col items-center px-20 py-40 bg-white overflow-hidden max-md:px-5 max-md:py-24 font-NotoSans">
       <div className="flex flex-col items-center text-lg font-bold text-blue-800 w-[369px] max-w-full leading-7">
         <img
           loading="lazy"
