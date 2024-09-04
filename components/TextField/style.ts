@@ -1,11 +1,13 @@
 import tv from '@/utils/tv'
+import { list } from 'postcss'
+import { ListBoxItem } from 'react-aria-components'
 import { VariantProps } from 'tailwind-variants'
 
 export type ButtonVariants = VariantProps<typeof textFieldTv>
 
 export const textFieldTv = tv({
   slots: {
-    root: [
+      root: [
       'grid gap-1',
     ],
     label: [
@@ -28,12 +30,21 @@ export const textFieldTv = tv({
       'caret-primary-1',
       'placeholder:!text-body-sm placeholder:text-neutral-1/50',
       'text-body-sm text-neutral-1',
-      'grow pr-12', 
+      'grow',
       'autofill:!bg-transparent autofill:!text-neutral-1',
     ],
+
     inputIconContainer: [
-      'absolute right-0 top-0 bottom-0 flex items-center gap-2', 
+      'shrink-0',
+      '*:size-4',
+      'flex items-center *:ml-2',
     ],
+
+    comboBoxIconContainer: [
+      'absolute right-0 top-0 bottom-0 flex items-center gap-2',
+    ],
+
+
     xCircleIcon: [
       'cursor-pointer',
       'text-neutral-3',
@@ -43,9 +54,33 @@ export const textFieldTv = tv({
     caretDownContainer: [
       'h-full border-l flex w-[1.75rem] justify-center', 
     ],
+
     popover: [
-      'absolute left-0 z-10 bg-neutral-4 border border-neutral-2 rounded-md shadow-lg mt-[0.125rem]',
+      'absolute left-0 z-10 bg-neutral-4 border border-neutral-2 rounded-md shadow-lg mt-[0.125rem]', 
     ],
+    
+    checkbox: [
+      'relative',
+      'border-none',
+      'cursor-pointer',
+      'w-5 h-5 p-3',
+      'rounded gap-5',
+      'ring-inset ring-1 ring-neutral-2',
+    ],
+
+    listBox:[
+      'px-3',
+    ],
+
+    listBoxItem: [
+      'text-body-sm text-neutral-1',
+      'flex items-center gap-2 py-2'
+    ],
+
+    listBoxItemCheckbox: [
+      'text-neutral-4 absolute inset-0 translate-x-1/2 translate-y-1/2'
+    ],
+
     description: [
       'text-body-sm text-neutral-1',
     ],

@@ -1,8 +1,9 @@
+'use client'
 import CertificateTable from '@/components/CertificateTable/CertificateTable'
 import Header from '@/components/Header/Header'
 import NavBar from '@/components/NavBar/NavBar'
-import IhiLogoIcon from '@/public/icons/ihi-logo'
 import { Suspense } from 'react'
+import {Button, ComboBox, Input, Label, ListBox, ListBoxItem, Popover} from 'react-aria-components';
 
 export default function HomePage() {
   return (
@@ -19,6 +20,7 @@ export default function HomePage() {
           Chuyển đến trang Contact (thêm vào lịch sử)
         </CustomAriaLink>
       </div> */}
+
     </Suspense>
   )
 }

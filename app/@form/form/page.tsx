@@ -5,7 +5,6 @@ import Button from '@/components/Button/CustomButton'
 import Input from '@/components/TextField/CustomTextField'
 import ComboBox from '@/components/ComboBox/ComboBox'
 import PopupNotification from '@/components/PopupNotification/PopupNotification'
-import { ListBoxItem } from 'react-aria-components'
 
 export default function FormCreatePage() {
   const [showPopup, setShowPopup] = useState(false)
@@ -19,13 +18,20 @@ export default function FormCreatePage() {
   }
 
   const courseTitles = ['Course 1', 'Course 2', 'Course 3', 'Course 4', 'Course 5']
-  const organizationTitles = ['Organization 1', 'Organization 2', 'Organization 3', 'Organization 4', 'Organization 5']
+
+  const organizationTitles = [
+    { id: 1, title: 'Organization 1' },
+    { id: 2, title: 'Organization 2' },
+    { id: 3, title: 'Organization 3' },
+    { id: 4, title: 'Organization 4' },
+    { id: 5, title: 'Organization 5' },
+  ]
 
   return (
     <Modal>
-      <aside className='fixed top-0 right-0 flex flex-col bg-white border border-zinc-300 shadow-lg w-[500px] max-w-full h-screen z-50 '>
-        <header className='flex items-center justify-between px-6 py-4 border-b border-zinc-300'>
-          <h2 className='text-lg font-bold text-zinc-800 '>Create new certificate</h2>
+      <aside className='fixed top-0 right-0 flex flex-col bg-neutral-4 border border-neutral-2 shadow-lg w-[31.25rem] max-w-full h-screen z-50 '>
+        <header className='flex items-center justify-between px-6 py-4 border-b border-neutral-2'>
+          <h2 className='text-lg font-bold text-neutral-1'>Create new certificate</h2>
           <div className='flex gap-2'>
             <Button
               variant='secondary'
@@ -33,7 +39,7 @@ export default function FormCreatePage() {
             >
               Cancel
             </Button>
-            <Button variant='primary' >Save</Button>
+            <Button variant='primary'>Save</Button>
           </div>
         </header>
         <section className='flex-1 px-6 py-4 overflow-auto'>
@@ -47,25 +53,10 @@ export default function FormCreatePage() {
               labelText='Organization title'
               id='organizationTitle'
               isRequired
-            >
-              {organizationTitles.map((title) => (
-                <ListBoxItem key={title} textValue={title}>
-                  {title}
-                </ListBoxItem>
-              ))}
-            </ComboBox>
-
-            <ComboBox
-              labelText='Course title'
-              id='courseTitle'
-              isRequired
-            >
-              {courseTitles.map((title) => (
-                <ListBoxItem key={title} textValue={title}>
-                  {title}
-                </ListBoxItem>
-              ))}
-            </ComboBox>
+              items={organizationTitles}
+              itemText={(item) => item.title}
+              itemCheckbox
+            />
           </form>
         </section>
       </aside>

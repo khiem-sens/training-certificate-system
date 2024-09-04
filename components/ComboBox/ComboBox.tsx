@@ -1,6 +1,6 @@
 import { Assign } from '@/types/common'
 import { ErrorMessage } from '@hookform/error-message'
-import { Warning } from '@phosphor-icons/react/dist/ssr'
+import { Warning, Check } from '@phosphor-icons/react/dist/ssr'
 import Button from '@/components/Button/CustomButton'
 import React, { useRef, useState } from 'react'
 import { usePress } from 'react-aria'
@@ -13,13 +13,16 @@ import {
   Text,
   ComboBoxProps as RACComboBoxProps,
   ComboBoxRenderProps,
+  ListBoxItem,
   composeRenderProps,
+  Checkbox,
 } from 'react-aria-components'
 import { FieldErrors } from 'react-hook-form'
 import { VariantProps } from 'tailwind-variants'
 import XCircleIcon from '@/public/icons/x-circle'
 import { textFieldTv } from '../TextField/style'
 import { CaretDown } from '@phosphor-icons/react'
+import CheckMark from '@/public/icons/checkmark'
 
 type ComboBoxVariants = VariantProps<typeof textFieldTv>
 
@@ -39,7 +42,9 @@ export type ComboBoxProps<T extends object> = Assign<
     caretDownContainerClassName?: string
     popoverClassName?: string
     errors?: FieldErrors
-    children: React.ReactNode | ((item: T) => React.ReactNode)
+    items: T[]
+    itemText: (item: T) => string
+    itemCheckbox?: boolean
   }
 >
 
@@ -47,7 +52,7 @@ const ComboBox = <T extends object & { id: string | number }>({
   labelText,
   labelClassName,
   inputContainerClassName,
-  placeholder = 'Select an option',
+  placeholder = 'Choose',
   inputClassName,
   inputIconContainerClassName,
   descriptionText,
@@ -58,13 +63,43 @@ const ComboBox = <T extends object & { id: string | number }>({
   popoverClassName,
   errors,
   isRequired = true,
-  children,
+  items,
+  itemText,
+  itemCheckbox = false,
   ...props
 }: ComboBoxProps<T>) => {
-  const { root, label, inputContainer, input, inputIconContainer, caretDownContainer, popover, xCircleIcon, description, error } = textFieldTv()
+  const {
+    root,
+    label,
+    inputContainer,
+    input,
+    checkbox,
+    listBoxItem,
+    listBoxItemCheckbox,
+    listBox,
+    caretDownContainer,
+    comboBoxIconContainer,
+    popover,
+    xCircleIcon,
+    description,
+    error,
+  } = textFieldTv()
 
   const inputRef = useRef<HTMLInputElement>(null)
   const [value, setValue] = useState<string>('')
+  const [selectedItems, setSelectedItems] = useState<Set<number | string>>(new Set())
+
+  const handleCheckboxChange = (itemId: number | string) => {
+    setSelectedItems((prev) => {
+      const newSelectedItems = new Set(prev)
+      if (newSelectedItems.has(itemId)) {
+        newSelectedItems.delete(itemId)
+      } else {
+        newSelectedItems.add(itemId)
+      }
+      return newSelectedItems
+    })
+  }
 
   const { pressProps } = usePress({
     onPressEnd: () => inputRef.current?.focus(),
@@ -104,7 +139,7 @@ const ComboBox = <T extends object & { id: string | number }>({
               placeholder={placeholder}
               className={input({ className: inputClassName })}
             />
-            <div className={inputIconContainer()}>
+            <div className={comboBoxIconContainer()}>
               {value && (
                 <XCircleIcon
                   {...pressProps}
@@ -114,19 +149,23 @@ const ComboBox = <T extends object & { id: string | number }>({
                 />
               )}
               {isInvalid && (
-                  <Warning
-                    weight='fill'
-                    className='text-semantic-red'
-                  />
-                )}
-              <div className={caretDownContainer({className: caretDownContainerClassName})}>
+                <Warning
+                  weight='fill'
+                  className='text-semantic-red'
+                />
+              )}
+              <div className={caretDownContainer({ className: caretDownContainerClassName })}>
                 <Button
                   className=''
                   aria-label='Open Combobox'
                   iconOnly
                   variant='ghost'
                 >
-                  <CaretDown weight="bold" className='text-neutral-1' style={{ width: '12px', height: '12px' }}/>
+                  <CaretDown
+                    weight='bold'
+                    className='text-neutral-1'
+                    style={{ width: '12px', height: '12px' }}
+                  />
                 </Button>
               </div>
             </div>
@@ -155,9 +194,37 @@ const ComboBox = <T extends object & { id: string | number }>({
           )}
           <Popover
             className={popover({ className: popoverClassName })}
-            style={{ width: inputRef.current?.offsetWidth || '100%' }}
+            placement='bottom start'
+            style={{ minWidth: inputRef.current?.offsetWidth || '100%' }}
           >
-            <ListBox className='p-1'>{children}</ListBox>
+            <ListBox className={listBox()}>
+              {items.map((item) => (
+                <ListBoxItem
+                  key={item.id}
+                  textValue={itemText(item)}
+                >
+                  <label className={listBoxItem()}>
+                    {itemCheckbox && (
+                      <Checkbox
+                        isSelected={selectedItems.has(item.id)}
+                        onChange={() => handleCheckboxChange(item.id)}
+                        className={`${checkbox()} ${
+                          selectedItems.has(item.id) ?
+                            'bg-primary-1 ring-2 ring-primary-1'
+                          : checkbox()
+                        }`}
+                      >
+                        {selectedItems.has(item.id) && (
+                          <CheckMark className={listBoxItemCheckbox()} />
+                        )}
+                      </Checkbox>
+                    )}
+
+                    <span>{itemText(item)}</span>
+                  </label>
+                </ListBoxItem>
+              ))}
+            </ListBox>
           </Popover>
         </>
       )}
