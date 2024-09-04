@@ -1,67 +1,162 @@
-import React, { useState } from "react";
-import { TextField, Label, Input } from "react-aria-components";
-import { tv } from "tailwind-variants";
-import { twMerge } from "tailwind-merge";
+'use client'
 
-const textFieldStyles = tv({
-  base: "flex flex-col",
-  variants: {
-    isRequired: {
-      true: "required",
-    },
-  },
-});
+import { Assign } from '@/types/common'
+import { ErrorMessage } from '@hookform/error-message'
+import { Warning } from '@phosphor-icons/react/dist/ssr'
+import { ChangeEvent, forwardRef, useImperativeHandle, useRef, useState } from 'react'
+import { usePress } from 'react-aria'
+import {
+  composeRenderProps,
+  Input as RACInput,
+  Label,
+  TextField as RACTextField,
+  TextFieldProps as RACTextFieldProps,
+  Text,
+} from 'react-aria-components'
+import { FieldErrors } from 'react-hook-form'
+import { VariantProps } from 'tailwind-variants'
+import { textFieldTv } from './style'
+import XCircleIcon from '@/public/icons/x-circle'
+type TextFieldVariants = VariantProps<typeof textFieldTv>
 
-const labelStyles = tv({
-  base: "font-bold text-sm text-zinc-800 flex items-center gap-1",
-});
+export type InputProps = Assign<
+  Assign<RACTextFieldProps, TextFieldVariants>,
+  {
+    labelText?: string
+    labelClassName?: string
+    inputContainerClassName?: string
+    placeholder?: string
+    inputClassName?: string
+    inputIconContainerClassName?: string
+    descriptionText?: string
+    descriptionClassName?: string
+    errorClassName?: string
+    errors?: FieldErrors
+  }
+>
 
-const inputStyles = tv({
-  base: "mt-1 p-2 text-sm border border-zinc-300 rounded bg-white text-zinc-800",
-});
-
-interface CustomTextFieldProps {
-  label?: string;
-  id?: string;
-  type?: string;
-  isRequired?: boolean;
-  className?: string;
-}
-
-export const CustomTextField: React.FC<CustomTextFieldProps> = ({
-  label,
-  id,
-  type,
-  isRequired = false,
-  className,
+const Input = ({
+  labelText,
+  labelClassName,
+  inputContainerClassName,
+  placeholder = 'Type here',
+  inputClassName,
+  inputIconContainerClassName,
+  descriptionText,
+  descriptionClassName,
+  errorClassName,
+  errors,
+  inputMode = 'text',
+  isRequired = true,
   ...props
-}) => {
-  const [inputValue, setInputValue] = useState<string>("");
+}: InputProps) => {
+  const {
+    root,
+    label,
+    inputContainer,
+    input,
+    inputIconContainer,
+    xCircleIcon,
+    description,
+    error,
+  } = textFieldTv()
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
-    // console.log(event.target.value);
-  };
+  const inputRef = useRef<HTMLInputElement>(null)
+  const [value, setValue] = useState(props.value)
+  const { pressProps, isPressed } = usePress({
+    onPressEnd: (e) => inputRef.current?.focus(),
+    onPress: (e) => {
+      setValue('')
+      props.onChange?.('')
+    },
+  })
 
   return (
-    <TextField
-      className={twMerge(textFieldStyles({ isRequired }), type, className)}
+    <RACTextField
       {...props}
+      inputMode={inputMode}
+      isRequired={isRequired}
+      className={composeRenderProps(props.className, (className, renderProps) =>
+        root({ ...renderProps, ...props, className })
+      )}
     >
-      <Label className={labelStyles()}>
-        {label}
-        {isRequired && <span className="text-orange-700 opacity-70">*</span>}
-      </Label>
-      <Input
-        id={id}
-        type={type}
-        className={inputStyles()}
-        placeholder="Type here"
-        value={inputValue}
-        onChange={handleInputChange}
-      />
-    </TextField>
-  );
-};
+      {composeRenderProps(props.children, (children, { isRequired, isDisabled, isInvalid }) => {
+        return (
+          <>
+            {labelText && (
+              <Label className={label({ className: labelClassName })}>
+                <span data-slot='label-text'>{labelText}</span>
+                {isRequired && <span data-slot='label-ast'>&#42;</span>}
+              </Label>
+            )}
+            <div
+              className={inputContainer({
+                isDisabled,
+                isInvalid,
+                className: inputContainerClassName,
+              })}
+            >
+              <RACInput
+                ref={inputRef}
+                placeholder={placeholder}
+                value={value}
+                onChange={(e) => {
+                  setValue(e.target.value)
+                  props.onChange?.(e.target.value)
+                }}
+                onFocus={(e) => {
+                  const el = e.target
+                  el.select()
+                  el.setSelectionRange(el.selectionEnd, el.selectionEnd)
+                }}
+                className={composeRenderProps(inputClassName, (className, renderProps) =>
+                  input({ ...renderProps, className })
+                )}
+              />
+              <div className={inputIconContainer({ className: inputIconContainerClassName })}>
+                {value && (
+                  <XCircleIcon
+                    {...pressProps}
+                    role='button'
+                    tabIndex={0}
+                    className={xCircleIcon({ isDisabled })}
+                  />
+                )}
+                {isInvalid && (
+                  <Warning
+                    weight='fill'
+                    className='text-semantic-red'
+                  />
+                )}
+              </div>
+            </div>
+            {descriptionText && (
+              <Text
+                slot='description'
+                className={description({ className: descriptionClassName })}
+              >
+                {descriptionText}
+              </Text>
+            )}
+            {props.name && (
+              <ErrorMessage
+                name={props.name}
+                errors={errors}
+                render={({ message }) => (
+                  <Text
+                    slot='errorMessage'
+                    className={error({ className: errorClassName })}
+                  >
+                    {message}
+                  </Text>
+                )}
+              />
+            )}
+          </>
+        )
+      })}
+    </RACTextField>
+  )
+}
 
-export default CustomTextField;
+export default Input

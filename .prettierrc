@@ -1,0 +1,9 @@
+{
+  "experimentalTernaries": true,
+  "printWidth": 100,
+  "semi": false,
+  "singleQuote": true,
+  "jsxSingleQuote": true,
+  "singleAttributePerLine": true,
+  "tailwindFunctions": ["clsx", "tw", "tv", "cn"]
+}

@@ -1,30 +1,32 @@
-import React from "react";
+import React from 'react'
 
 interface NavItemProps {
-  label: string;
-  iconSrc: string;
-  section: string;
-  isActive: boolean;
-  onClick: (section: string) => void;
+  label: string
+  iconSrc: string
+  section: string
+  isActive: boolean
+  onClick: (section: string) => void
 }
 
 const NavItem: React.FC<NavItemProps> = ({ label, iconSrc, section, isActive, onClick }) => {
   return (
     <div
       onClick={() => onClick(section)}
-      className={`relative flex items-center p-2 md:p-4 cursor-pointer w-fit overflow-hidden transition-all duration-300 ease-in-out font-NotoSans ${
+      className={`relative flex items-center p-2 md:p-4 cursor-pointer w-fit overflow-hidden transition-all duration-300 ease-in-out  ${
         isActive ? 'bg-gray-100' : 'bg-transparent'
       }`}
     >
       <img
-        loading="lazy"
+        loading='lazy'
         src={iconSrc}
         alt={`${label} Icon`}
-        className="w-5"
+        className='w-5'
       />
-      <span className={`ml-2 transition-colors duration-300 ease-in-out ${
-        isActive ? 'font-bold text-blue-800' : 'text-gray-600'
-      }`}>
+      <span
+        className={`ml-2 transition-colors duration-300 ease-in-out ${
+          isActive ? 'font-bold text-blue-800' : 'text-gray-600'
+        }`}
+      >
         {label}
       </span>
       <span
@@ -34,7 +36,7 @@ const NavItem: React.FC<NavItemProps> = ({ label, iconSrc, section, isActive, on
         style={{ transformOrigin: 'left' }}
       />
     </div>
-  );
-};
+  )
+}
 
-export default NavItem;
+export default NavItem

@@ -1,50 +1,75 @@
-"use client";
-import React from "react";
-import { Button } from "react-aria-components";
-import { tv } from "tailwind-variants";
-import { twMerge } from "tailwind-merge";
-import { useRouter } from "next/navigation";
+'use client'
+import { Assign } from '@/types/common'
+import { CircleNotch } from '@phosphor-icons/react/dist/ssr'
+import clsx from 'clsx'
+import { forwardRef, ReactNode } from 'react'
+import {
+  composeRenderProps,
+  Button as RACButton,
+  ButtonProps as RACButtonProps,
+} from 'react-aria-components'
+import { buttonTv, ButtonVariants } from './style'
 
-const buttonStyles = tv({
-  base: "px-4 py-2 rounded shadow-sm transition-all duration-200 ease-in-out", 
-  variants: {
-    variant: {
-      primary: "bg-blue-800 text-white hover:bg-blue-600 font-NotoSans",
-      secondary: "bg-white border border-zinc-300 text-zinc-800 hover:text-[#346fe0] font-NotoSans",
-    },
-  },
-});
+type Props = Assign<RACButtonProps, ButtonVariants>
 
-interface CustomButtonProps {
-  variant: "primary" | "secondary";
-  className?: string;
-  children: React.ReactNode;
-  onClick?: () => void;
-  route?: string; 
+// Utility function to wrap strings in a <span>
+const wrapStringsInSpan = (children: ReactNode): ReactNode => {
+  if (typeof children === 'string') {
+    // Wrap strings in a <span>
+    return <span>{children}</span>
+  }
+
+  if (Array.isArray(children)) {
+    // If children is an array, check each element
+    return children.map((child, index) => {
+      if (typeof child === 'string') {
+        return <span key={index}>{child}</span>
+      }
+      return child
+    })
+  }
+  return children
 }
 
-export const CustomButton: React.FC<CustomButtonProps> = ({
-  variant,
-  className,
-  children,
-  onClick,
-  route, 
-  ...props
-}) => {
-  const router = useRouter(); 
-
-  const handleClick = () => {
-    if (onClick) onClick(); 
-    if (route) router.push(route); 
-  };
-
+const Button = forwardRef<HTMLButtonElement, Props>(({ children, ...props }, ref) => {
   return (
-    <Button
-      className={twMerge(buttonStyles({ variant }), className)}
-      onPress={handleClick} 
+    <RACButton
+      ref={ref}
       {...props}
+      isDisabled={props.isDisabled || !!props.isPending}
+      className={composeRenderProps(props.className, (className, renderProps) =>
+        buttonTv({ ...renderProps, ...props, className })
+      )}
     >
-      {children}
-    </Button>
-  );
-};
+      {composeRenderProps(children, (children, { isFocused }) => (
+        <>
+          {wrapStringsInSpan(children)}
+          {props.variant?.includes('ghost') && (
+            <span
+              data-slot='border'
+              className={clsx([
+                'absolute inset-x-0 bottom-0 h-px',
+                props.variant === 'ghost' && 'bg-primary-2',
+                props.variant === 'danger-ghost' && 'bg-semantic-red-2',
+                isFocused ? 'opacity-100' : 'opacity-0',
+              ])}
+            />
+          )}
+          {!!props.isPending && (
+            <span
+              data-slot='loading-icon'
+              className='absolute-center'
+            >
+              <CircleNotch
+                weight='bold'
+                className='animate-spin'
+              />
+            </span>
+          )}
+        </>
+      ))}
+    </RACButton>
+  )
+})
+
+export default Button

@@ -1,52 +1,81 @@
-"use client";
-import { CustomButton } from "@/components/Button/CustomButton";
-import { CustomTextField } from "@/components/TextField/CustomTextField";
-import { useRouter } from "next/navigation";
-import * as React from "react";
+'use client'
 
-export default function SigninPage() {
-  const router = useRouter();
-  const handleSubmit = () => {
-    router.push("/");
-  };
+import Button from '@/components/Button/CustomButton'
+import FormInput from '@/components/Form/FormInput'
+import IhiLogoIcon from '@/public/icons/ihi-logo'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { FormProvider, useForm } from 'react-hook-form'
+import { z } from 'zod'
+
+// Minimum 8 characters, at least one uppercase letter, one lowercase letter, one number and one special character
+const passwordValidation = new RegExp(
+  /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
+)
+
+const schema = z.object({
+  email: z
+    .string()
+    .trim()
+    .min(1, 'Email is required.')
+    .email({ message: 'Invalid email. Please try again.' }),
+  password: z
+    .string()
+    .trim()
+    .min(1, 'Password is required')
+    .regex(passwordValidation, { message: 'Invalid password. Please try again.' }),
+})
+type FormValues = z.infer<typeof schema>
+
+export default function LoginPage() {
+
+  const formMethods = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  })
+  const {
+    handleSubmit,
+    formState: { errors },
+  } = formMethods
+  console.log('🚀 ~ LoginPage ~ errors:', errors)
+  const onSubmit = handleSubmit((data) => {
+    console.log('🚀 ~ onSubmit ~ data:', data)
+  })
 
   return (
-    <div className="flex flex-col items-center px-20 py-40 bg-white overflow-hidden max-md:px-5 max-md:py-24 font-NotoSans">
-      <div className="flex flex-col items-center text-lg font-bold text-blue-800 w-[369px] max-w-full leading-7">
-        <img
-          loading="lazy"
-          src="/images/logo.svg"
-          alt="Web3-based Training Certificates"
-          className="w-[149px] object-contain aspect-[2.65] max-w-full"
-        />
-        <div className="mt-5">Web3-based Training Certificates</div>
+    <div className='w-full max-w-125 grid justify-items-center gap-14'>
+      <div className='grid justify-items-center gap-5'>
+        <IhiLogoIcon />
+        <p className='text-h2 text-primary-1'>Web3-based Training Certificates</p>
       </div>
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col mt-14 w-[500px] max-w-full max-md:mt-10"
-      >
-        <CustomTextField
-          type="email"
-          label="Email"
-          id="email"
-          isRequired={true}
-          className="text-sm"
-        />
-        <CustomTextField
-          label="Password"
-          id="password"
-          isRequired={true}
-          className="mt-10 text-sm"
-        />
-        {/* <div className="flex-1 shrink self-stretch mt-1 w-full text-sm leading-5 text-orange-700 max-md:max-w-full">
-          Invalid password. Please try again.
-        </div> */}
-        <div className="flex justify-center mt-10">
-          <CustomButton onClick={handleSubmit} variant="primary">
-            Sign in
-          </CustomButton>
-        </div>
-      </form>
+      <FormProvider {...formMethods}>
+        <form
+          onSubmit={onSubmit}
+          className='w-full grid gap-10'
+        >
+          <FormInput
+            name='email'
+            labelText='Email'
+            inputMode='email'
+            autoFocus
+          />
+          <FormInput
+            name='password'
+            labelText='Password'
+            type='password'
+          />
+          <Button
+            type='submit'
+            className='w-fit justify-self-center'
+          >
+            <span>Sign in</span>
+          </Button>
+        </form>
+      </FormProvider>
     </div>
-  );
+  )
 }
