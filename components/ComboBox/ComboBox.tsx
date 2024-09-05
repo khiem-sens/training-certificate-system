@@ -83,6 +83,7 @@ const ComboBox = <T extends object & { id: string | number }>({
 
   const inputRef = useRef<HTMLInputElement>(null)
   const [value, setValue] = useState<string>('')
+  const [isOpen, setIsOpen] = useState(false);
 
   const { pressProps } = usePress({
     onPressEnd: () => inputRef.current?.focus(),
@@ -101,6 +102,7 @@ const ComboBox = <T extends object & { id: string | number }>({
       inputValue={value}
       isRequired={isRequired}
       onInputChange={setValue}
+      onOpenChange={setIsOpen}
     >
       {({ isRequired, isDisabled, isInvalid }: ComboBoxRenderProps) => (
         <>
@@ -145,7 +147,7 @@ const ComboBox = <T extends object & { id: string | number }>({
               >
                 <CaretDown
                   weight='bold'
-                  className='text-neutral-1'
+                  className={`text-neutral-1 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
                   style={{ width: '12px', height: '12px' }}
                 />
               </Button>
