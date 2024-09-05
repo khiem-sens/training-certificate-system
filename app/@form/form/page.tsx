@@ -17,14 +17,20 @@ export default function FormCreatePage() {
     setShowPopup(false)
   }
 
-  const courseTitles = ['Course 1', 'Course 2', 'Course 3', 'Course 4', 'Course 5']
-
   const organizationTitles = [
     { id: 1, title: 'Organization 1' },
     { id: 2, title: 'Organization 2' },
     { id: 3, title: 'Organization 3' },
     { id: 4, title: 'Organization 4' },
     { id: 5, title: 'Organization 5' },
+  ]
+
+  const courseTitles = [
+    { id: 1, title: 'Course 1' },
+    { id: 2, title: 'Course 2' },
+    { id: 3, title: 'Course 3' },
+    { id: 4, title: 'Course 4' },
+    { id: 5, title: 'Course 5' },
   ]
 
   return (
@@ -57,17 +63,25 @@ export default function FormCreatePage() {
               itemText={(item) => item.title}
               itemCheckbox
             />
+            <ComboBox
+              labelText='Course title'
+              id='courseTitle'
+              isRequired
+              items={courseTitles}
+              itemText={(item) => item.title}
+              itemCheckbox
+            />
           </form>
         </section>
       </aside>
 
       {showPopup && (
         <PopupNotification
-          title='Confirm Sign Out'
-          message='Are you sure you want to sign out?'
-          onConfirm='Confirm'
-          onCancel='Cancel'
-          route='/signout'
+          title='Discard changes?'
+          message='Your changes have not been saved yet. Do you want to discard all changes?'
+          onConfirm='Discard changes'
+          onCancel='No, take me back'
+          route=''
           onClose={handlePopupClose}
         />
       )}

@@ -10,7 +10,9 @@ import {
 } from 'react-aria-components'
 import { buttonTv, ButtonVariants } from './style'
 
-type Props = Assign<RACButtonProps, ButtonVariants>
+type Props = Assign<RACButtonProps, ButtonVariants> & {
+  isCurrentPage?: boolean 
+}
 
 // Utility function to wrap strings in a <span>
 const wrapStringsInSpan = (children: ReactNode): ReactNode => {
@@ -31,7 +33,7 @@ const wrapStringsInSpan = (children: ReactNode): ReactNode => {
   return children
 }
 
-const Button = forwardRef<HTMLButtonElement, Props>(({ children, ...props }, ref) => {
+const Button = forwardRef<HTMLButtonElement, Props>(({ children, isCurrentPage, ...props }, ref) => {
   return (
     <RACButton
       ref={ref}
@@ -51,7 +53,7 @@ const Button = forwardRef<HTMLButtonElement, Props>(({ children, ...props }, ref
                 'absolute inset-x-0 bottom-0 h-px',
                 props.variant === 'ghost' && 'bg-primary-2',
                 props.variant === 'danger-ghost' && 'bg-semantic-red-2',
-                isFocused ? 'opacity-100' : 'opacity-0',
+                (isFocused || isCurrentPage) ? 'opacity-100' : 'opacity-0',
               ])}
             />
           )}

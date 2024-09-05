@@ -1,5 +1,6 @@
 import { CaretLeft, CaretRight } from '@phosphor-icons/react'
 import React, { useState, useEffect } from 'react'
+import Button from '../Button/CustomButton'
 
 interface PaginationProps {
   currentPage: number
@@ -57,34 +58,46 @@ const Pagination: React.FC<PaginationProps> = ({
       aria-label='Pagination'
     >
       <div className='flex items-center gap-4'>
-        <button
+        <Button
+          variant='ghost'
+          iconOnly
           className='w-6 p-0.5'
           aria-label='Previous page'
-          onClick={() => onPageChange(Math.max(1, currentPage - 1))}
-          disabled={currentPage === 1}
+          onPress={() => onPageChange(Math.max(1, currentPage - 1))}
         >
-          <CaretLeft size={20} weight="regular" className='text-primary-1'/>
-        </button>
-        <div className='flex justify-start gap-1.5 w-full text-sm text-blue-800'>
+          <CaretLeft
+            size={20}
+            weight='regular'
+            className='text-primary-1'
+          />
+        </Button>
+        <div className='flex justify-between gap-1.5 w-full text-sm text-primary-1'>
           {pageNumbers.map((page) => (
-            <button
+            <Button
               key={page}
-              className={`px-1 py-0.5 w-6 hover:text-[#346fe0] ${page === currentPage ? 'text-blue-600 border-b border-blue-600' : ''}`}
+              variant='ghost'
+              isCurrentPage={page === currentPage}
+              className={`flex justify-center w-6 h-6 text-body-sm hover:text-primary-2 ${page === currentPage ? 'text-primary-2' : 'text-primary-1'}`}
               aria-current={page === currentPage ? 'page' : undefined}
-              onClick={() => onPageChange(page)}
+              onPress={() => onPageChange(page)}
             >
               {page}
-            </button>
+            </Button>
           ))}
         </div>
-        <button
+        <Button
+          variant='ghost'
+          iconOnly
           className='w-6 p-0.5'
           aria-label='Next page'
-          onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
-          disabled={currentPage === totalPages}
+          onPress={() => onPageChange(Math.min(totalPages, currentPage + 1))}
         >
-          <CaretRight size={20} weight="regular" className='text-primary-1'/>
-        </button>
+          <CaretRight
+            size={20}
+            weight='regular'
+            className='text-primary-1'
+          />
+        </Button>
       </div>
       <form
         onSubmit={handleGotoPageSubmit}

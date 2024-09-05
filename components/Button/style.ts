@@ -31,6 +31,7 @@ export const buttonTv = tv({
       'danger-ghost': [
         'text-semantic-red',
       ],
+      
     },
     size: {
       md: '',

@@ -195,7 +195,7 @@ const ComboBox = <T extends object & { id: string | number }>({
           <Popover
             className={popover({ className: popoverClassName })}
             placement='bottom start'
-            style={{ minWidth: inputRef.current?.offsetWidth || '100%' }}
+            style={{ minWidth: inputRef.current?.offsetWidth || '100%'}}
           >
             <ListBox className={listBox()}>
               {items.map((item) => (

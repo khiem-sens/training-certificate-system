@@ -27,9 +27,9 @@ const AdminDropdown: React.FC = () => {
 
       {showPopup && (
         <PopupNotification
-          title='Confirm Sign Out'
+          title='Sign out?'
           message='Are you sure you want to sign out?'
-          onConfirm='Confirm'
+          onConfirm='Sign out now'
           onCancel='Cancel'
           route='/signout'
           onClose={handlePopupClose}
