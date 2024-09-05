@@ -19,7 +19,7 @@ export const textFieldTv = tv({
     ],
     inputContainer: [
       'rounded bg-neutral-4 relative',
-      'px-3 py-2',
+      'py-2',
       'ring-inset ring-1',
       'ring-neutral-2',
       'focus-within:shadow-focus-input',
@@ -27,11 +27,14 @@ export const textFieldTv = tv({
       'flex items-center',
     ],
     input: [
+      'px-3',
+      'bg-transparent',
       'caret-primary-1',
       'placeholder:!text-body-sm placeholder:text-neutral-1/50',
       'text-body-sm text-neutral-1',
       'grow',
       'autofill:!bg-transparent autofill:!text-neutral-1',
+      'w-full'
     ],
 
     inputIconContainer: [
@@ -69,12 +72,16 @@ export const textFieldTv = tv({
     ],
 
     listBox:[
-      'px-3',
+      
     ],
 
     listBoxItem: [
+      'px-3',
       'text-body-sm text-neutral-1',
-      'flex items-center gap-2 py-2'
+      'flex items-center gap-2 py-2',
+      'hover:bg-neutral-3',
+      'first:hover:rounded-t-md',
+      'last:hover:rounded-b-md',
     ],
 
     listBoxItemCheckbox: [

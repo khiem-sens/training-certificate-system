@@ -1,6 +1,6 @@
 import { Assign } from '@/types/common'
 import { ErrorMessage } from '@hookform/error-message'
-import { Warning, Check } from '@phosphor-icons/react/dist/ssr'
+import { Warning } from '@phosphor-icons/react/dist/ssr'
 import Button from '@/components/Button/CustomButton'
 import React, { useRef, useState } from 'react'
 import { usePress } from 'react-aria'
@@ -15,14 +15,12 @@ import {
   ComboBoxRenderProps,
   ListBoxItem,
   composeRenderProps,
-  Checkbox,
 } from 'react-aria-components'
 import { FieldErrors } from 'react-hook-form'
 import { VariantProps } from 'tailwind-variants'
 import XCircleIcon from '@/public/icons/x-circle'
 import { textFieldTv } from '../TextField/style'
 import { CaretDown } from '@phosphor-icons/react'
-import CheckMark from '@/public/icons/checkmark'
 
 type ComboBoxVariants = VariantProps<typeof textFieldTv>
 
@@ -73,9 +71,7 @@ const ComboBox = <T extends object & { id: string | number }>({
     label,
     inputContainer,
     input,
-    checkbox,
     listBoxItem,
-    listBoxItemCheckbox,
     listBox,
     caretDownContainer,
     comboBoxIconContainer,
@@ -87,19 +83,6 @@ const ComboBox = <T extends object & { id: string | number }>({
 
   const inputRef = useRef<HTMLInputElement>(null)
   const [value, setValue] = useState<string>('')
-  const [selectedItems, setSelectedItems] = useState<Set<number | string>>(new Set())
-
-  const handleCheckboxChange = (itemId: number | string) => {
-    setSelectedItems((prev) => {
-      const newSelectedItems = new Set(prev)
-      if (newSelectedItems.has(itemId)) {
-        newSelectedItems.delete(itemId)
-      } else {
-        newSelectedItems.add(itemId)
-      }
-      return newSelectedItems
-    })
-  }
 
   const { pressProps } = usePress({
     onPressEnd: () => inputRef.current?.focus(),
@@ -154,9 +137,8 @@ const ComboBox = <T extends object & { id: string | number }>({
                   className='text-semantic-red'
                 />
               )}
-              <div className={caretDownContainer({ className: caretDownContainerClassName })}>
                 <Button
-                  className=''
+                  className={caretDownContainer({ className: caretDownContainerClassName })}
                   aria-label='Open Combobox'
                   iconOnly
                   variant='ghost'
@@ -167,7 +149,6 @@ const ComboBox = <T extends object & { id: string | number }>({
                     style={{ width: '12px', height: '12px' }}
                   />
                 </Button>
-              </div>
             </div>
           </div>
           {descriptionText && (
@@ -195,33 +176,18 @@ const ComboBox = <T extends object & { id: string | number }>({
           <Popover
             className={popover({ className: popoverClassName })}
             placement='bottom start'
-            style={{ minWidth: inputRef.current?.offsetWidth || '100%'}}
+            style={{ width: 'var(--trigger-width)' }}
           >
             <ListBox className={listBox()}>
               {items.map((item) => (
                 <ListBoxItem
                   key={item.id}
                   textValue={itemText(item)}
+                  className={listBoxItem({
+                    className: value === itemText(item) ? 'bg-neutral-3' : '', 
+                  })}
                 >
-                  <label className={listBoxItem()}>
-                    {itemCheckbox && (
-                      <Checkbox
-                        isSelected={selectedItems.has(item.id)}
-                        onChange={() => handleCheckboxChange(item.id)}
-                        className={`${checkbox()} ${
-                          selectedItems.has(item.id) ?
-                            'bg-primary-1 ring-2 ring-primary-1'
-                          : checkbox()
-                        }`}
-                      >
-                        {selectedItems.has(item.id) && (
-                          <CheckMark className={listBoxItemCheckbox()} />
-                        )}
-                      </Checkbox>
-                    )}
-
-                    <span>{itemText(item)}</span>
-                  </label>
+                  <span>{itemText(item)}</span>
                 </ListBoxItem>
               ))}
             </ListBox>
