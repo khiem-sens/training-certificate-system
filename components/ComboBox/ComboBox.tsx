@@ -137,18 +137,18 @@ const ComboBox = <T extends object & { id: string | number }>({
                   className='text-semantic-red'
                 />
               )}
-                <Button
-                  className={caretDownContainer({ className: caretDownContainerClassName })}
-                  aria-label='Open Combobox'
-                  iconOnly
-                  variant='ghost'
-                >
-                  <CaretDown
-                    weight='bold'
-                    className='text-neutral-1'
-                    style={{ width: '12px', height: '12px' }}
-                  />
-                </Button>
+              <Button
+                className={caretDownContainer({ className: caretDownContainerClassName })}
+                aria-label='Open Combobox'
+                iconOnly
+                variant='ghost'
+              >
+                <CaretDown
+                  weight='bold'
+                  className='text-neutral-1'
+                  style={{ width: '12px', height: '12px' }}
+                />
+              </Button>
             </div>
           </div>
           {descriptionText && (
@@ -184,7 +184,7 @@ const ComboBox = <T extends object & { id: string | number }>({
                   key={item.id}
                   textValue={itemText(item)}
                   className={listBoxItem({
-                    className: value === itemText(item) ? 'bg-neutral-3' : '', 
+                    className: value === itemText(item) ? 'bg-neutral-3' : '',
                   })}
                 >
                   <span>{itemText(item)}</span>

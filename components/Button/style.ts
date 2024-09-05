@@ -13,25 +13,11 @@ export const buttonTv = tv({
   ],
   variants: {
     variant: {
-      primary: [
-        'text-neutral-4',
-        'bg-primary-1',
-      ],
-      secondary: [
-        'text-neutral-1',
-        'ring-inset ring-1 ring-neutral-2',
-      ],
-      ghost: [
-        'text-primary-1',
-      ],
-      danger: [
-        'text-neutral-4',
-        'bg-semantic-red',
-      ],
-      'danger-ghost': [
-        'text-semantic-red',
-      ],
-      
+      primary: ['text-neutral-4', 'bg-primary-1'],
+      secondary: ['text-neutral-1', 'ring-inset ring-1 ring-neutral-2'],
+      ghost: ['text-primary-1'],
+      danger: ['text-neutral-4', 'bg-semantic-red'],
+      'danger-ghost': ['text-semantic-red'],
     },
     size: {
       md: '',

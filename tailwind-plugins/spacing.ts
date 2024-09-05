@@ -29,5 +29,5 @@ export default withOptions(
         spacing: getSpacingUtilities(spacing),
       },
     }
-  }
+  },
 )

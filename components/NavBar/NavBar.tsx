@@ -53,7 +53,8 @@ const NavBar = () => {
         />
         <div className='relative flex items-center'>
           <Button
-            onPress={handleDropdownToggle} variant='ghost'
+            onPress={handleDropdownToggle}
+            variant='ghost'
           >
             Admin_name
           </Button>
@@ -62,7 +63,10 @@ const NavBar = () => {
               <AdminDropdown />
             </div>
           )}
-          <CaretDown onClick={handleDropdownToggle} className='w-4 h-4 text-primary-1'/>
+          <CaretDown
+            onClick={handleDropdownToggle}
+            className='w-4 h-4 text-primary-1'
+          />
         </div>
       </div>
     </header>

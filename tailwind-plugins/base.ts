@@ -49,9 +49,9 @@ export default plugin(({ addBase, theme }) => {
     'a, span': {
       // display: 'inline-block',
     },
-    '[type="search"]::-webkit-search-decoration': {display: 'none'},
-    '[type="search"]::-webkit-search-cancel-button': {display: 'none'},
-    '[type="search"]::-webkit-search-results-button': {display: 'none'},
-    '[type="search"]::-webkit-search-results-decoration': {display: 'none'},
+    '[type="search"]::-webkit-search-decoration': { display: 'none' },
+    '[type="search"]::-webkit-search-cancel-button': { display: 'none' },
+    '[type="search"]::-webkit-search-results-button': { display: 'none' },
+    '[type="search"]::-webkit-search-results-decoration': { display: 'none' },
   })
 })

@@ -25,35 +25,26 @@ const Header = () => {
   }
 
   return (
-    <div
-      className={clsx([
-        'px-20 pt-10 pb-8',
-        'flex items-center gap-6',
-      ])}
-    >
+    <div className={clsx(['px-20 pt-10 pb-8', 'flex items-center gap-6'])}>
       <h1 className='grow text-h1 text-neutral-1'>Training Certificates</h1>
-      <div
-        className={clsx([
-          'shrink-0',
-          'flex items-center gap-2',
-        ])} 
-      >
-        <div className="relative w-80">
+      <div className={clsx(['shrink-0', 'flex items-center gap-2'])}>
+        <div className='relative w-80'>
           <Input
             placeholder='Search'
             type='search'
             inputMode='search'
             value={searchValue}
-            onChange={handleSearchChange} 
+            onChange={handleSearchChange}
             isRequired={false}
           />
           {!searchValue && (
-            <MagnifyingGlass
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-neutral-1 size-4"
-            />
+            <MagnifyingGlass className='absolute right-3 top-1/2 transform -translate-y-1/2 text-neutral-1 size-4' />
           )}
         </div>
-        <Button onPress={handleCreateNewClick} className='shrink-0'>
+        <Button
+          onPress={handleCreateNewClick}
+          className='shrink-0'
+        >
           <Plus />
           Create new
         </Button>

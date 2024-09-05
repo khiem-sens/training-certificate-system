@@ -77,7 +77,7 @@ const Input = ({
       inputMode={inputMode}
       isRequired={isRequired}
       className={composeRenderProps(props.className, (className, renderProps) =>
-        root({ ...renderProps, ...props, className })
+        root({ ...renderProps, ...props, className }),
       )}
     >
       {composeRenderProps(props.children, (children, { isRequired, isDisabled, isInvalid }) => {
@@ -110,7 +110,7 @@ const Input = ({
                   el.setSelectionRange(el.selectionEnd, el.selectionEnd)
                 }}
                 className={composeRenderProps(inputClassName, (className, renderProps) =>
-                  input({ ...renderProps, className })
+                  input({ ...renderProps, className }),
                 )}
               />
               <div className={inputIconContainer({ className: inputIconContainerClassName })}>

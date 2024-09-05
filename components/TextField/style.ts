@@ -7,9 +7,8 @@ export type ButtonVariants = VariantProps<typeof textFieldTv>
 
 export const textFieldTv = tv({
   slots: {
-      root: [
-      'grid gap-1',
-    ],
+    root: ['grid gap-1'],
+
     label: [
       'py-0.5 w-fit',
       'flex items-center gap-1',
@@ -17,6 +16,7 @@ export const textFieldTv = tv({
       '[&_[data-slot=label-text]]:text-neutral-1',
       '[&_[data-slot=label-ast]]:text-semantic-red',
     ],
+
     inputContainer: [
       'rounded bg-neutral-4 relative',
       'py-2',
@@ -26,6 +26,7 @@ export const textFieldTv = tv({
       'focus-within:ring-inset focus-within:ring-1 focus-within:ring-primary-1',
       'flex items-center',
     ],
+
     input: [
       'px-3',
       'bg-transparent',
@@ -34,19 +35,12 @@ export const textFieldTv = tv({
       'text-body-sm text-neutral-1',
       'grow',
       'autofill:!bg-transparent autofill:!text-neutral-1',
-      'w-full'
+      'w-full',
     ],
 
-    inputIconContainer: [
-      'shrink-0',
-      '*:size-4',
-      'flex items-center *:ml-2',
-    ],
+    inputIconContainer: ['shrink-0 pr-3', '*:size-4', 'flex items-center *:ml-2'],
 
-    comboBoxIconContainer: [
-      'absolute right-0 top-0 bottom-0 flex items-center gap-2',
-    ],
-
+    comboBoxIconContainer: ['absolute right-0 top-0 bottom-0 flex items-center gap-2'],
 
     xCircleIcon: [
       'cursor-pointer',
@@ -54,14 +48,13 @@ export const textFieldTv = tv({
       'transition-colors hover:text-neutral-2',
       'focus:drop-shadow-focus-icon',
     ],
-    caretDownContainer: [
-      'h-full border-l flex w-[1.75rem] justify-center', 
-    ],
+
+    caretDownContainer: ['p-0 border-l flex w-[1.75rem] justify-center', 'h-[calc(100%-0.125rem)]'],
 
     popover: [
-      'absolute left-0 z-10 bg-neutral-4 border border-neutral-2 rounded-md shadow-lg mt-[0.125rem]', 
+      'absolute left-0 z-10 bg-neutral-4 border border-neutral-2 rounded-md shadow-lg mt-[0.125rem]',
     ],
-    
+
     checkbox: [
       'relative',
       'border-none',
@@ -71,9 +64,7 @@ export const textFieldTv = tv({
       'ring-inset ring-1 ring-neutral-2',
     ],
 
-    listBox:[
-      
-    ],
+    listBox: [],
 
     listBoxItem: [
       'px-3',
@@ -84,16 +75,11 @@ export const textFieldTv = tv({
       'last:hover:rounded-b-md',
     ],
 
-    listBoxItemCheckbox: [
-      'text-neutral-4 absolute inset-0 translate-x-1/2 translate-y-1/2'
-    ],
+    listBoxItemCheckbox: ['text-neutral-4 absolute inset-0 translate-x-1/2 translate-y-1/2'],
 
-    description: [
-      'text-body-sm text-neutral-1',
-    ],
-    error: [
-      'text-body-sm text-semantic-red',
-    ],
+    description: ['text-body-sm text-neutral-1'],
+
+    error: ['text-body-sm text-semantic-red'],
   },
   variants: {
     isRequired: {
@@ -108,7 +94,6 @@ export const textFieldTv = tv({
       false: '',
       true: '',
     },
-
   },
   defaultVariants: {
     isRequired: true,
@@ -139,10 +124,7 @@ export const textFieldTv = tv({
     {
       slots: ['inputContainer'],
       isInvalid: true,
-      className: [
-        'ring-semantic-red',
-        'focus-within:ring-semantic-red',
-      ],
+      className: ['ring-semantic-red', 'focus-within:ring-semantic-red'],
     },
   ],
 })

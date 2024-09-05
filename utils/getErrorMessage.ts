@@ -2,7 +2,7 @@ import { FieldErrors, FieldValues } from 'react-hook-form'
 
 export default function getErrorMessage(
   name: string,
-  errors: FieldErrors<FieldValues>
+  errors: FieldErrors<FieldValues>,
 ): string | undefined {
   const keys = name.split('.')
   let index = 0

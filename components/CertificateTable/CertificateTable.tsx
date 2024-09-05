@@ -88,7 +88,9 @@ const CertificateTable: React.FC = () => {
                   <Cell className='py-5 text-body-sm '>{certificate.courseTitle}</Cell>
                   <Cell className='py-5 text-body-sm '>{certificate.orgName}</Cell>
                   <Cell className='py-5 text-body-sm '>{certificate.adminName}</Cell>
-                  <Cell className={`py-5 text-body-sm ${isProcessing ? 'text-semantic-red' : 'text-neutral-1'}`}>
+                  <Cell
+                    className={`py-5 text-body-sm ${isProcessing ? 'text-semantic-red' : 'text-neutral-1'}`}
+                  >
                     {certificate.uid}
                   </Cell>
                   <Cell
