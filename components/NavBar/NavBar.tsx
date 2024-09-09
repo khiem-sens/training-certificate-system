@@ -1,10 +1,10 @@
 'use client'
 import React, { useState, useEffect, useRef } from 'react'
-import AdminDropdown from '../Dropdown/Dropdown'
-import Button from '../Button/CustomButton'
 import IhiLogoIcon from '@/public/icons/ihi-logo'
 import clsx from 'clsx'
 import { CaretDown } from '@phosphor-icons/react'
+import Button from '../ui/button/button'
+import AdminDropdown from '../ui/dropdown'
 
 const NavBar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
